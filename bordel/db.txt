@@ -1,0 +1,44 @@
+Tournament
+	id
+	name
+	startTime
+	endTime
+
+Match
+	id
+	tournamentId
+	Name
+	bo?
+	Date
+	Result
+	Completed?
+
+Game
+	id
+	MatchId
+	number
+	duration
+	startTime
+	endTime
+	Completed?
+	Winning Team
+
+
+League
+Tournament
+Ranking
+Match
+Game
+
+Team
+Player
+
+Event
+
+Dragon
+Grubs
+
+
+	
+	
+	

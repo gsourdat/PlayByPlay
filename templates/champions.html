@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Champions</title>
+    <style>
+        body {
+            margin: 0;
+            text-align: center;
+            background-color: #0F0F1A;
+            color: #E0E0E0;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        h1 {
+            color: #00A3FF;
+            font-size: 2em;
+            margin-top: 20px;
+        }
+
+        .champion-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .champion-card {
+            background-color: #333;
+            padding: 10px;
+            border-radius: 10px;
+            width: 150px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .champion-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .champion-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #E0E0E0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des Champions</h1>
+    <div class="champion-container" id="champion-list">
+        Chargement des champions...
+    </div>
+
+    <script>
+        // Fonction pour récupérer et afficher les champions
+        function fetchChampions() {
+            fetch('/champions')
+                .then(response => response.json())
+                .then(champions => {
+                    const championListElement = document.getElementById("champion-list");
+                    championListElement.innerHTML = ""; // Réinitialiser la liste
+
+                    champions.forEach(champion => {
+                        console.log("Champion:", champion);
+                        const championCard = document.createElement("div");
+                        championCard.classList.add("champion-card");
+
+                        championCard.innerHTML = `
+                            <img src="static/${champion.photo}" alt="${champion.id}">
+                            <div class="champion-name">${champion.id}</div>
+                        `;
+
+                        championListElement.appendChild(championCard);
+                    });
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la récupération des champions:", error);
+                    document.getElementById("champion-list").innerHTML = "<p style='color: red;'>Erreur de chargement des champions.</p>";
+                });
+        }
+
+        // Appeler la fonction au chargement de la page
+        document.addEventListener("DOMContentLoaded", fetchChampions);
+    </script>
+</body>
+</html>

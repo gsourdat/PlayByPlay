@@ -1,0 +1,136 @@
+
+
+.date-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+input[type="date"] {
+    font-size: 1.1em;
+    padding: 10px;
+    border-radius: 50px;
+    border: 1px solid #ccc;
+    width: 180px;
+    text-align: center;
+    transition: border-color 0.3s ease;
+}
+input[type="date"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+
+button {
+    background-color: #00A3FF;
+    color: #FFFFFF;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #007ACC;
+    transform: scale(1.05);
+}
+
+/* Match Card CSS*/
+
+
+.match-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 15px;
+}
+
+.team-logo {
+    height: 100px;
+}
+
+.match-details {
+    text-align: center;
+    flex-grow: 1;
+    position: relative;
+}
+
+.match-card {
+    position: relative; /* Nécessaire pour positionner les éléments enfants absolument par rapport à la carte */
+    border: 1px solid #ddd; /* Bords légers */
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    background-color: #0F0F1A; /* Fond gris anthracite pour la carte */
+    color: #E0E0E0; /* Texte en blanc lumineux */
+}
+
+/* Centrer et ajuster la taille des noms des équipes */
+.match-details h2 {
+    font-size: 2em; /* Agrandir le nom des équipes */
+    margin: 10px 0;
+}
+
+.match-details .vs {
+    font-size: 1.5em; /* Taille plus petite pour 'vs' */
+    color: #E0E0E0; /* Texte en blanc lumineux */
+}
+
+
+/* Score du match */
+.score-wrapper {
+    font-size: 2em; /* Agrandir la taille du score */
+    font-weight: bold;
+    color: #FFFFFF; /* Texte en blanc */
+}
+
+/* Match Header */
+.match-header {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrer les éléments dans le header */
+    color: #E0E0E0; /* Texte en blanc lumineux */
+    background-color: #0A0A14;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: 1px solid #ddd; /* Bords légers */
+    position: relative; /* Pour positionner les éléments relatifs à ce conteneur */
+}
+
+
+
+.league-logo {
+    height: 30px;
+    margin-right: 10px; /* Espacement entre le logo et le nom */
+}
+
+
+/* Live Sign */
+.live-sign {
+    background-color: #FF4444; /* Rouge intense pour le badge live */
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 16px;
+    font-size: 1em;
+    position: absolute; /* Positionner par rapport à match-header */
+    left: 20px; /* Espacement à gauche */
+}
+
+/* Pour centrer le nom de la ligue et le logo */
+.league-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrer le logo et le nom de la ligue */
+    flex-grow: 1; /* Permet au conteneur de s'étendre pour occuper l'espace central */
+    font-size: 1em;
+}
+
+
+
+
+
+
+
+

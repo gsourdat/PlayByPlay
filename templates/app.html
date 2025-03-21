@@ -1,0 +1,69 @@
+
+
+
+{% extends "base.html" %}
+
+{% block title %}Matchs League of Legends{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+{% endblock %}
+
+
+{% block content %}
+<div class="date-picker">
+    <button onclick="changeDate(-1)">
+        <span>&lt;</span>
+    </button>
+    <input type="date" id="start-date" onchange="fetchMatches()">
+    <button onclick="changeDate(1)">
+        <span>&gt;</span>
+    </button>
+</div>
+<div id="matches-container">Chargement des matchs...</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+{% endblock %}
+
+
+
+<!--
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matchs League of Legends</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="images/logo.png" alt="Logo de l'application">
+        </div>
+        <h1>Matchs League of Legends</h1>
+    </header>
+    <main>
+    <div class="date-picker">
+        <button onclick="changeDate(-1)">
+            <span>&lt;</span>
+        </button>
+        <input type="date" id="start-date" onchange="fetchMatches()">
+        <button onclick="changeDate(1)">
+            <span>&gt;</span>
+        </button>
+    </div>
+    <div id="matches-container">Chargement des matchs...</div>
+    </main>
+    
+</body>
+</html>
+
+-->
