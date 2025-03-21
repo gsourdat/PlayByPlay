@@ -8,12 +8,6 @@ Ce projet est une application web permettant de visualiser les matchs de League 
 ├── .gitignore
 ├── appPLaybPlay.py
 ├── main.py
-├── bordel/
-│   ├── db.txt
-│   ├── main.html
-│   ├── pandasTests.py
-│   ├── play.py
-│   ├── script2.js
 ├── scripts/
 │   ├── AddChampsScript.py
 │   ├── AddLeaguesScript.py
@@ -27,17 +21,7 @@ Ce projet est une application web permettant de visualiser les matchs de League 
 │   │   ├── match.css
 │   │   ├── styles.css
 │   │   ├── fonts/
-│   │       ├── Rajdhani-Bold.ttf
-│   │       ├── Rajdhani-Light.ttf
-│   │       ├── Rajdhani-Medium.ttf
-│   │       ├── Rajdhani-Regular.ttf
-│   │       ├── Rajdhani-SemiBold.ttf
-│   │       ├── OFL.txt
 │   ├── images/
-│   │   ├── bottom.png
-│   │   ├── bottom.webp
-│   │   ├── eyeBarre.png
-│   │   ├── jungle.png
 │   ├── js/
 │       ├── app.js
 │       ├── match.js
@@ -80,7 +64,7 @@ Ce projet est une application web permettant de visualiser les matchs de League 
     }
     ```
 
-2. Assurez-vous que votre base de données est configurée et que les tables nécessaires sont créées.
+2. Assurez-vous que votre base de données est configurée et que les tables nécessaires sont créées. (J'ajoute, une fois qu'il est finit, un script pour installer le schéma.)
 
 ## Utilisation
 
