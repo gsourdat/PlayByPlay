@@ -1,4 +1,7 @@
+![Work in Progress](https://img.shields.io/badge/status-in%20progress-yellow)
+
 # Matchs League of Legends
+
 
 ## Description
 Ce projet est une application web permettant de visualiser les matchs de League of Legends. Les utilisateurs peuvent consulter les matchs programmés, les détails des matchs, ainsi que les compositions des équipes.

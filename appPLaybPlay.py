@@ -11,15 +11,51 @@ import threading
 from flask_socketio import SocketIO, emit
 import random
 from flask import render_template, jsonify
-from main import main
+from routes.main import main
+from routes.user import user, User, get_db_connection
+from routes.match import match
+from routes.champions import champions
+from routes.commentaires import commentaire
+from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect
 
 
 import ssl
 print(ssl.OPENSSL_VERSION)
+print("begin")
 
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'
+
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+# Initialize LoginManager
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'user.connexion'  # Redirect to login page if not authenticated
+#csrf = CSRFProtect(app)
+
+# Define the user loader function
+@login_manager.user_loader
+def load_user(user_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM utilisateurs WHERE id = %s", (user_id,))
+    utilisateur = cursor.fetchone()
+    conn.close()
+    if utilisateur:
+        return User(id=utilisateur[0], email=utilisateur[1], role=utilisateur[4], pseudo=utilisateur[6], profile_pic=utilisateur[7])
+    return None
+
+
 app.register_blueprint(main)
+app.register_blueprint(user, url_prefix='/user')
+app.register_blueprint(match)
+app.register_blueprint(champions, url_prefix='/champions')
+app.register_blueprint(commentaire)
+
 
 CORS(app)  # Autoriser les requêtes cross-origin
 socketio = SocketIO(app, cors_allowed_origins="*")  # Initialiser SocketIO avec CORS autorisé
@@ -120,7 +156,6 @@ def get_match_detail(match_id):
 
     # Récupérer la composition des équipes
     def get_team_players(team_id):
-        print(team_id)
         player_query = """
       
             SELECT team.team_id, team.name, player.player_id, player.first_name, player.last_name, player.image_url, player.summoner_name, player.role
@@ -131,7 +166,6 @@ def get_match_detail(match_id):
         return cursor.fetchall()
     
     team1_players = get_team_players(match['team1_id'])
-    print(team1_players)
     team2_players = get_team_players(match['team2_id'])
 
     conn.close()
@@ -165,7 +199,6 @@ def get_match_detail(match_id):
             } for player in team2_players
         ]
     }
-    print(match_detail)
     return match_detail
 
 @app.route("/matchesBetween", methods=["GET"])
@@ -308,7 +341,7 @@ def match_games():
     for game in games:
         game_id = game['game_id']
         
-        def get_team_players(team_id):
+        def get_team_players(team_id, game_id):
             player_query = """
             SELECT p.player_id, p.first_name, p.last_name, p.image_url, p.summoner_name, p.role,
                 pgs.champion, pt.team_id
@@ -319,17 +352,40 @@ def match_games():
             """
             cursor.execute(player_query, (game_id, team_id))
             return cursor.fetchall()
-        
-        team1_players = get_team_players(game['team1_id'])
-        team2_players = get_team_players(game['team2_id'])
-        # Séparer les joueurs par équipe
-        #team1_players = [player for player in players if player['team_id'] == game['team1_id']]
-        #team2_players = [player for player in players if player['team_id'] == game['team2_id']]
-        
-        game['team1_players'] = team1_players
-        game['team2_players'] = team2_players
-    print(json.dumps(games, indent=4))
 
+        game['team1_players'] = get_team_players(game['team1_id'], game_id)
+        game['team2_players'] = get_team_players(game['team2_id'], game_id)
+        
+        def get_game_events_obso(game_id):
+            player_query = """SELECT event_time, game_id, match_id, 
+                            type, team_color, team_id, player_id, opponent_team_color, 
+                            opponent_team_id, opponent_player_id, details 
+                            FROM event WHERE game_id = %s"""
+            cursor.execute(player_query, (game_id,))  # 👈 Ajout de la virgule pour créer un tuple
+            return cursor.fetchall()
+        def get_game_events(game_id):
+            query = """
+                SELECT e.event_id, e.event_time, e.game_id, e.match_id, e.type, e.team_color, e.team_id, 
+                    t.name AS team_name, t.logo_url AS team_logo, 
+                    e.player_id, p.first_name AS player_first_name, p.last_name AS player_last_name, p.image_url AS player_image_url, p.summoner_name AS player_summoner_name, p.role AS player_role,
+                    e.opponent_team_color, e.opponent_team_id, 
+                    ot.name AS opponent_team_name, ot.logo_url AS opponent_team_logo, 
+                    e.opponent_player_id, op.first_name AS opponent_player_first_name, op.last_name AS opponent_player_last_name, op.image_url AS opponent_player_image_url, op.summoner_name AS opponent_player_summoner_name, op.role AS opponent_player_role,
+                    e.details
+                FROM event e
+                LEFT JOIN team t ON e.team_id = t.team_id
+                LEFT JOIN player p ON e.player_id = p.player_id
+                LEFT JOIN team ot ON e.opponent_team_id = ot.team_id
+                LEFT JOIN player op ON e.opponent_player_id = op.player_id
+                WHERE e.game_id = %s
+            """
+            cursor.execute(query, (game_id,))
+            events = cursor.fetchall()
+            return events
+        
+   
+        game['events'] = get_game_events(game_id)
+    print(games)
     conn.close()
     return jsonify(games)
 

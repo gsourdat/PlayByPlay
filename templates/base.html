@@ -10,9 +10,32 @@
 <body>
     <header>
         <div class="logo-container">
-            <img src="images/logo.png" alt="Logo de l'application">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo de l'application">
         </div>
         <h1>Matchs League of Legends</h1>
+        <nav>
+            <ul>
+                {% if current_user.is_authenticated %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">
+                            <img src="{{ url_for('static', filename=current_user.profile_pic) if current_user.profile_pic else url_for('static', filename='images/none-player.png') }}" 
+                                 alt="Photo de profil de {{ current_user.pseudo }}" 
+                                 class="profile-pic">
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><strong>{{ current_user.pseudo }}</strong></li>
+                            <li><p>{{ current_user.email }}</p></li>
+                            <li><a href="{{ url_for('user.deconnexion') }}">Déconnexion</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <div class="dropdown auth-buttons">
+                        <a href="{{ url_for('user.connexion') }}" class="btn btn-primary btn-rounded">Connexion</a>
+                        <a href="{{ url_for('user.inscription') }}" class="btn btn-secondary btn-rounded">Inscription</a>
+                    </div>
+                {% endif %}
+            </ul>
+        </nav>
     </header>
 
     <main>
@@ -22,6 +45,29 @@
     <footer>
         <p>&copy; 2025 - Matchs League of Legends</p>
     </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const dropdown = document.querySelector(".dropdown");
+            const dropdownToggle = document.querySelector(".dropdown-toggle");
+            const dropdownMenu = document.querySelector(".dropdown-menu");
+
+            if (dropdownToggle && dropdownMenu) {
+                dropdownToggle.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    dropdownMenu.classList.toggle("show");
+                });
+
+                // Ferme le menu si on clique en dehors
+                document.addEventListener("click", function(event) {
+                    if (!dropdown.contains(event.target)) {
+                        dropdownMenu.classList.remove("show");
+                    }
+                });
+            }
+        });
+
+        
+    </script>    
     {% block scripts %}{% endblock %}
 </body>
 </html>

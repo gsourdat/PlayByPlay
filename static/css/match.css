@@ -13,11 +13,6 @@ body {
     font-family: 'Rajdhani', sans-serif;
 }
 
-h1 {
-    color: #00A3FF;
-    font-size: 2.5em;
-}
-
 .match-container {
     display: flex;
     justify-content: space-between;
@@ -45,8 +40,8 @@ h1 {
     
 }
 
-#game-container{
-    max-height: 400px; /* Hauteur fixe */
+.game-events{
+    max-height: 200px; /* Hauteur fixe */
     overflow-y: auto; /* Ajoute un scroll vertical si nécessaire */
     overflow-x: hidden; /* Cache le scroll horizontal */
 }
@@ -214,3 +209,138 @@ button.active {
 }
 
 
+
+
+/* Styles de base pour l'événement de jeu */
+
+
+
+.game-event {
+    background-color: #2A2A2A;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    flex-wrap: wrap;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #444;
+}
+
+
+/* Si l'événement concerne l'équipe rouge */
+.game-event.redTeam {
+    border-left: 6px solid red;
+    border-right: 6px solid blue;
+    background-color: #3D0B0B; /* Fond rouge plus foncé pour l'équipe rouge */
+}
+
+/* Si l'événement concerne l'équipe bleue */
+.game-event.blueTeam {
+    border-left: 6px solid blue;
+    border-right: 6px solid red;
+    background-color: #0B3D5D; /* Fond bleu plus foncé pour l'équipe bleue */
+}
+
+/* Styles pour les informations de l'événement */
+.game-event .info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    margin-left: 15px;
+}
+
+.game-event .info p {
+    margin: 0 8px;  /* Espacement réduit autour des éléments */
+    font-size: 14px;
+    color: #E0E0E0;
+    flex: 1 1 auto;
+    line-height: 1.4;
+    display: flex;
+    align-items: center; /* Aligne le texte avec l'image */
+}
+
+.game-event .info .event-time {
+    font-weight: bold;
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+/* Couleurs des équipes et des joueurs */
+.game-event .info .event-type,
+.game-event .info .event-team,
+.game-event .info .event-player,
+.game-event .info .event-opponent-team,
+.game-event .info .event-opponent-player {
+    color: #B0B0B0;
+}
+
+.game-event .info .event-team img,
+.game-event .info .event-opponent-team img,
+.game-event .info .event-player img,
+.game-event .info .event-opponent-player img {
+    height: 40px; /* Taille uniforme des images */
+    width: 40px;
+    border-radius: 50%;
+    border: 1px solid #555;
+}
+
+.game-event .info .event-player,
+.game-event .info .event-opponent-player {
+    font-size: 18px; /* Agrandir le pseudo */
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+/* Couleurs des noms des joueurs, selon l'équipe */
+.game-event.redTeam .event-player {
+    color: red;
+}
+
+.game-event.redTeam .event-opponent-player {
+    color: blue;
+}
+
+.game-event.blueTeam .event-player {
+    color: blue;
+}
+
+.game-event.blueTeam .event-opponent-player {
+    color: red;
+}
+
+.game-event.game-event.blueTeam .event-player img {
+    border-color: blue;
+}
+
+.game-event.game-event.redTeam .event-player img {
+    border-color: red;
+}
+
+.game-event.game-event.blueTeam .event-opponent-player img {
+    border-color: red;
+}
+
+.game-event.game-event.redTeam .event-opponent-player img {
+    border-color: blue;
+}
+
+@media (max-width: 768px) {
+    .game-event {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+
+    .game-event .info p {
+        font-size: 12px;
+        margin: 6px 10px;
+    }
+
+    .game-event .info .event-player,
+    .game-event .info .event-opponent-player {
+        font-size: 16px;
+    }
+}

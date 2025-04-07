@@ -1,0 +1,29 @@
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/game_event.css') }}">
+    <script src="{{ url_for('static', filename='js/components/game_event.js') }}"></script> <!-- Script spécifique -->
+</head>
+
+<div class="game-event {{ event.team_color }}" onclick="goToEvent({{ event.event_id }})">
+    <div class="info">
+        <p class="event-time">{{ eventTime }}</p>
+        {% if event.type == 'kill' %}
+            <p class="event-player">
+                <img src="{{ event.team_logo }}" class="team-logo" alt="{{ event.team_name }}" height="24">
+                <img src="{{ event.player_image_url if event.player_image_url else url_for('static', filename='img/default-avatar.png') }}" class="player-image" alt="{{ event.player_first_name }} {{ event.player_last_name }}" height="24">
+                {{ event.player_summoner_name | e }}
+            </p>
+            <p class="event-type">{{ event.type | e }}</p>
+            <p class="event-opponent-player">
+                <img src="{{ event.opponent_team_logo }}" class="team-logo" alt="{{ event.opponent_team_name }}" height="24">
+                <img src="{{ event.opponent_player_image_url if event.opponent_player_image_url else url_for('static', filename='img/default-avatar.png') }}" class="player-image" alt="{{ event.opponent_player_first_name }} {{ event.opponent_player_last_name }}" height="24">
+                {{ event.opponent_player_summoner_name | e }}
+            </p>
+        {% else %}
+            <p class="event-player">
+                <img src="{{ event.team_logo }}" class="team-logo" alt="{{ event.team_name }}" height="24">
+                {{ event.team_name | e }}
+            </p>
+            <p class="event-type">a accompli un événement : {{ event.type | e }}</p>
+        {% endif %}
+    </div>
+</div>

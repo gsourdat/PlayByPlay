@@ -1,0 +1,47 @@
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/comment_event.css') }}">
+    <script src="{{ url_for('static', filename='js/components/comment_event.js') }}"></script> <!-- Script spécifique -->
+    <script  type="module" src="{{ url_for('static', filename='js/components/comment_event_module.js') }}"></script> <!-- Script spécifique -->
+</head>
+
+<form class="comment-form" method="POST" action="{{ url_for('commentaire.ajouter_commentaire') }}" enctype="multipart/form-data">
+    <input type="hidden" name="event_id" value="{{ event.event_id }}">
+    <input type="hidden" name="parent_id" value=""> <!-- Champ caché pour le parentId -->
+
+    <!-- Affichage du pseudo et de la photo de profil de l'utilisateur -->
+    <div class="form-comment-container">
+        <div class="comment-profile-pic">
+            <img src="{{ url_for('static', filename=current_user.profile_pic) if current_user.profile_pic else url_for('static', filename='images/none-player.png') }}" 
+                alt="Photo de profil de {{ current_user.pseudo }}" 
+                class="form-comment-avatar">
+        </div>
+        <div class="form-comment-header">
+            
+            <!-- Déplacement du bloc ici -->
+            <textarea name="contenu" placeholder="Ajouter un commentaire..." required></textarea>
+            
+            <!-- Conteneur pour afficher la photo sélectionnée -->
+            <div id="photo-preview" class="photo-preview">
+                <!-- L'image sélectionnée sera insérée ici -->
+                <img src="{{ url_for('static', filename='images/icons/remove-icon.png') }}" alt="Supprimer la photo" class="remove-photo" id="remove-photo">
+            </div>
+
+            <!-- Conteneur pour les boutons emoji, photo et submit -->
+            <div class="form-buttons">
+                <button type="button" class="emoji-button" id="selection-emoji">
+                    <img src="{{ url_for('static', filename='images/icons/emoji-icon.png') }}" alt="Emoji" class="button-icon">
+                </button>
+                <button type="button" class="photo-button" id="add-photo">
+                    <img src="{{ url_for('static', filename='images/icons/images-icon.png') }}" alt="Photo" class="button-icon">
+                </button>
+                <input type="file" name="photo" accept="image/*" class="upload-photo" id="photo-input" style="display: none;">
+
+                <button type="submit" class="submit-button" id="submit-button">Envoyer</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    console.log("Script dans comment_event.html chargé !");
+</script>

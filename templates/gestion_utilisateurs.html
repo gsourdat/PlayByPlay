@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Gestion des Utilisateurs{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gestion_utilisateurs.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="page-title">Gestion des Utilisateurs</h2>
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Rôle</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in utilisateurs %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('user.modifier_role', user_id=user.id) }}">
+                        <select name="role" class="role-select">
+                            <option value="user" {% if user.role == 'user' %}selected{% endif %}>Utilisateur</option>
+                            <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Administrateur</option>
+                        </select>
+                        <button type="submit" class="btn btn-save">Enregistrer</button>
+                    </form>
+                </td>
+                <td>
+                    <button class="btn btn-delete" onclick="deleteUser({{ user.id }})">Supprimer</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function deleteUser(userId) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
+            fetch(`/user/supprimer/${userId}`, { method: 'POST' })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Utilisateur supprimé avec succès !");
+                        location.reload();
+                    } else {
+                        alert("Erreur lors de la suppression de l'utilisateur.");
+                    }
+                });
+        }
+    }
+</script>
+{% endblock %}

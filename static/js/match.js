@@ -69,6 +69,7 @@ const matchId = matchContainer.getAttribute('data-match-id');
                     .then(response => response.json())
                     .then(games => {
                         gamesData = games;
+                        console.log(gamesData)
                         const gameSelection = document.getElementById("game-selection");
                         games.forEach((game, index) => {
                             const button = document.createElement("button");
@@ -100,6 +101,10 @@ const matchId = matchContainer.getAttribute('data-match-id');
                 activeButton.classList.add("active");
             }
 
+            function goToEvent(eventId) {
+                window.location.href = `/event/${eventId}`;
+            }
+
             function displayGameDetails(index) {
                 const gameDetails = document.getElementById("game-details");
                 const selectedGame = gamesData[index];
@@ -107,6 +112,7 @@ const matchId = matchContainer.getAttribute('data-match-id');
                 if (selectedGame) {
                     let team1Players = '';
                     let team2Players = '';
+                    let gameEvents = '';
 
                     selectedGame.team1_players.forEach(player => {
                         team1Players += `
@@ -130,6 +136,29 @@ const matchId = matchContainer.getAttribute('data-match-id');
                         `;
                     });
 
+                    selectedGame.events.forEach(event => {
+                        const eventTime = new Date(event.event_time).toLocaleTimeString('fr-FR', { hour12: false });
+
+                        gameEvents += `
+                            <div class="game-event ${event.team_color}" onclick="goToEvent(${event.event_id})">
+                                <div class="info">
+                                    <p class="event-time">${eventTime}</p>
+                                    ${event.type === 'kill' ? `
+                                        <p class="event-player"><img src="${event.team_logo}" class="team-logo" alt="${event.team_name}" height=24><img src="${event.player_image_url}" class="player-image" alt="${event.player_first_name} ${event.player_last_name}" height=24> ${event.player_summoner_name}</p>
+                                        <p class="event-type">${event.type}</p>
+                                        <p class="event-opponent-player"><img src="${event.opponent_team_logo}" class="team-logo" alt="${event.opponent_team_name}" height=24><img src="${event.opponent_player_image_url}" class="player-image" alt="${event.opponent_player_first_name} ${event.opponent_player_last_name}" height=24>${event.opponent_player_summoner_name}</p>
+                                    ` : ''}
+                                    ${event.type !== 'kill' ? `
+                                        <p class="event-player"><img src="${event.team_logo}" class="team-logo" alt="${event.team_name}" height=24>${event.team_name}</p>
+                                        <p class="event-type"> a tué le ${event.type}</p>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    
+
                     gameDetails.innerHTML = `
                         <h3>Game ${selectedGame.game_number}</h3>
                         <h3>${selectedGame.score_team1} - ${selectedGame.score_team2}</h3>
@@ -146,6 +175,10 @@ const matchId = matchContainer.getAttribute('data-match-id');
                                     ${team2Players}
                                 </div>
                             </div>
+                        </div>
+                        <div class="game-events">
+                            <h4>Events</h4>
+                            ${gameEvents}
                         </div>
                     `;
                 } else {

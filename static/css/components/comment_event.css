@@ -1,0 +1,160 @@
+
+
+
+
+.comment-form{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Liseré blanc avec opacité réduite */
+}
+
+.comment-form{
+    padding: 10px 10px 10px 10px; /* Ajout d'un padding pour espacer les éléments */
+}
+
+
+
+/* Aligne comment-profile-pic et comment-header côte à côte */
+.form-comment-container {
+    display: flex; /* Aligne les enfants horizontalement */
+    align-items: stretch; /* Étire les enfants pour qu'ils aient la même hauteur */
+    gap: 10px; /* Espacement entre l'avatar et le contenu */
+    width: 100%; /* Prend toute la largeur */
+    position: relative; /* Nécessaire pour positionner les enfants */
+
+}
+
+/* Positionner l'avatar, le pseudo et la date en haut à gauche */
+.form-comment-header {
+    display: flex;
+    align-items: flex-start; /* Aligne les éléments en haut */
+    width: 100%; /* Prend toute la largeur */
+    flex-wrap: wrap; /* Permet de passer à la ligne si nécessaire */
+    flex-grow: 1; /* Permet au contenu de prendre l'espace restant */
+}
+
+.form-comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Liseré autour de l'avatar */
+    object-fit: cover;
+}
+
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+/* AFFICHAGE DU FORM */
+
+
+.comment-form textarea {
+    width: 100%;
+    border: none; /* Suppression des bordures */
+    background-color: #192734;
+    color: #E1E8ED;
+    resize: none;
+}
+
+.comment-form textarea:focus {
+    outline: none; /* Supprime le contour de focus */
+}
+
+
+/* BOUTONS DU FORM */
+.form-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Sépare les boutons à gauche et à droite */
+    gap: 10px; /* Espacement entre les boutons */
+    width: 100%; /* Prend toute la largeur */
+    display: none; /* Masque par défaut */
+    animation: fadeIn 0.3s ease-in-out; /* Animation d'apparition*/
+}
+
+.form-buttons .emoji-button,
+.form-buttons .photo-button {
+    margin: 0; /* Supprime les marges inutiles */
+    display: inline-block; /* Assure qu'ils restent côte à côte */
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    line-height: 1; /* Assurez-vous que la hauteur de ligne est correcte */
+}
+
+.form-buttons .submit-button {
+    margin-left: auto; /* Aligne le bouton submit à droite */
+    background-color: #1DA1F2;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: auto;
+    box-sizing: border-box;
+}
+
+.emoji-button, .photo-button, .submit-button {
+    position: static; /* Positionnement par défaut */
+}
+
+
+.emoji-button img, .photo-button img {
+    width: 16px; /* Taille de l'icône */
+    height: 16px;
+}
+
+
+/* Conteneur pour l'image et le bouton */
+.image-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+/* Bouton de suppression positionné par rapport à l'image */
+.remove-photo {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 10; /* Assurez-vous que le bouton est au-dessus de l'image */
+    display: none;
+}
+
+.remove-photo:hover {
+    transform: scale(1.05); /* Agrandit légèrement l'image */
+}
+
+/* Image sélectionnée */
+.selected-photo {
+    border-radius: 8px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain; /* Ajuste l'image pour qu'elle soit contenue dans le cadre */
+}
+
+
+
+
+
+
+
+
+
+

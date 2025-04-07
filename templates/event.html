@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Détails de l'Événement{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/event.css') }}">
+
+{% endblock %}
+
+{% block content %}
+<div class="event-container">
+    <!-- iclusion de game_event - affichage des informations de l'event event-->
+    {% include "components/game_event.html" %}
+   
+    {% include "components/comment_event.html" %}
+
+    <div class="event-comments">
+            {% macro render_comments(comments, parent_id=None, level=0) %}
+                {% for comment in comments if comment.parent_id == parent_id %}
+                <div class="{% if level == 0 %}comment{% else %}child-comment{% endif %}">
+                    <!-- style="margin-left: {{ level * 20 }}px;"-->
+                    <div class="comment-header-container">
+                        <div class="comment-profile-pic">
+                            <img src="{{ url_for('static', filename=comment.profile_pic) if comment.profile_pic else url_for('static', filename='images/none-player.png') }}" 
+                                alt="Photo de profil de {{ comment.pseudo }}" 
+                                class="comment-avatar">
+                            <div class="vertical-bar"></div>
+                        </div>
+                        <div class="comment-header">    
+                            <div class="comment-meta">
+                                <p class="comment-pseudo"><strong>{{ comment.pseudo | e }}</strong></p>
+                                <p class="date">{{ comment.date_creation }}</p>
+                            </div>
+                            <div class="comment-comm">
+                                <p class="comment-text">{{ comment.contenu | e }}</p>
+                                <div class="comment-media">
+                                    {% if comment.gif_url %}
+                                        <img src="{{ comment.gif_url }}" alt="GIF" class="comment-gif" style="max-width: 200px;">
+                                    {% endif %}
+                                    {% if comment.photo_path %}
+                                        <img src="/static/{{ comment.photo_path }}" alt="Photo" class="comment-photo" onclick="openImagePopup(this.src)">
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div data-comment-id="{{ comment.id }}">
+                                <!-- Contenu du commentaire -->
+                                <div class="comment-reply">
+                                    <span class="reply-count">💬 {{ comments | selectattr('parent_id', 'equalto', comment.id) | list | length }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{ render_comments(comments, comment.id, level + 1) }}
+                </div>
+                {% endfor %}
+            {% endmacro %}
+            {{ render_comments(commentaires) }}
+    </div>
+</div>
+
+<!-- Popup Modal -->
+<div id="image-popup-modal" class="image-popup-container" style="display: none;">
+    <div class="image-popup-content">
+        <img id="popup-image" src="" alt="Image" class="popup-image">
+        <img src="{{ url_for('static', filename='images/icons/remove-icon.png') }}" 
+             alt="Fermer" 
+             class="close-popup" 
+             onclick="closeImagePopup()">
+    </div>
+</div>
+
+<!-- Popup Modal pour les réponses -->
+<div id="reply-popup-modal" class="reply-popup-container" style="display: none;">
+    <div class="reply-popup-content">
+        <img src="{{ url_for('static', filename='images/icons/remove-icon.png') }}" 
+             alt="Fermer" 
+             class="close-reply-popup" id="close-reply-popup"
+             onclick="closeReplyPopup()">
+        {% include "components/comment_event.html" %}
+    </div>
+</div>
+
+<!-- Ajoutez ce script dans votre fichier HTML -->
+<script type="text/javascript">
+    document.getElementById("image-popup-modal").addEventListener("click", (event) => {
+        if (event.target.id === "image-popup-modal") {
+            closeImagePopup();
+        }
+    });
+
+    function openImagePopup(imageSrc) {
+        const popupModal = document.getElementById("image-popup-modal");
+        const popupImage = document.getElementById("popup-image");
+        popupImage.src = imageSrc; // Définir l'image à afficher
+        popupModal.style.display = "flex"; // Afficher le popup
+    }
+
+    function closeImagePopup() {
+        const popupModal = document.getElementById("image-popup-modal");
+        popupModal.style.display = "none"; // Masquer le popup
+    }
+// Gestion du clic sur reply-count
+    document.querySelectorAll(".reply-count").forEach((replyCount) => {
+        replyCount.addEventListener("click", (event) => {
+            const parentId = event.target.closest(".comment").dataset.commentId; // Récupérer l'ID du commentaire parent
+            openReplyPopup(parentId);
+        });
+    });
+
+    // Fonction pour ouvrir le popup de réponse
+    function openReplyPopup(parentId) {
+        const popupModal = document.getElementById("reply-popup-modal");
+        const parentInput = popupModal.querySelector("input[name='parent_id']");
+        parentInput.value = parentId; // Définir le parentId dans le formulaire
+        popupModal.style.display = "flex"; // Afficher le popup
+        initializeCommentEventHandlers(document.querySelector("#reply-popup-modal"));
+    }
+
+    
+
+    function closeReplyPopup() {
+        const popupModal = document.getElementById("reply-popup-modal");
+        popupModal.style.display = "none"; // Masquer le popup
+    }
+
+
+
+        
+
+</script>
+    
+{% endblock %}

@@ -1,0 +1,229 @@
+@media (max-width: 768px) {
+    .event-container {
+        width: 90%;
+        padding: 15px;
+    }
+}
+
+.event-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background-color: #192734;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    /* Suppression du padding */
+}
+
+.event-container > .event-comments {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Liseré blanc avec opacité réduite */
+}
+
+/* Modernisation de l'affichage des commentaires */
+.comment {
+    display: flex;
+    flex-direction: column; /* Organisation verticale par défaut */
+    align-items: flex-start; /* Alignement à gauche */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Liseré blanc fin */
+    background-color: transparent; /* Fond transparent */
+    position: relative; /* Nécessaire pour positionner les éléments */
+    word-wrap: break-word; /* Permet de couper les mots longs */
+    overflow-wrap: break-word; /* Gère les débordements pour les mots longs */
+    max-width: 100%; /* Empêche le dépassement horizontal */
+    box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+    padding: 10px; /* Espacement vertical */
+
+}
+
+
+
+/* Aligne comment-profile-pic et comment-header côte à côte */
+.comment-header-container {
+    display: flex; /* Aligne les enfants horizontalement */
+    align-items: stretch; /* Étire les enfants pour qu'ils aient la même hauteur */
+    gap: 10px; /* Espacement entre l'avatar et le contenu */
+    width: 100%; /* Prend toute la largeur */
+    position: relative; /* Nécessaire pour positionner les enfants */
+
+}
+
+.comment-profile-pic {
+    flex-shrink: 0; /* Empêche l'avatar de rétrécir */
+    display: flex;
+    flex-direction: column;  /* Empile les éléments verticalement */
+    align-items: center;     /* Centre horizontalement */
+    gap: 2px;  
+    position: relative;      /* Nécessaire pour positionner les enfants */
+    height: 100%; /* Prend toute la hauteur de la div parente */
+
+}
+
+.comment-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Liseré autour de l'avatar */
+    object-fit: cover;
+}
+
+.vertical-bar {
+    position: relative; /* Positionnement absolu pour la barre verticale */
+    width: 2px;
+    height: calc(100% - 40px); /* Ajuste la hauteur pour exclure celle de l'avatar */
+    background-color: rgba(255, 255, 255, 0.2);
+    z-index: 1000;
+  }
+
+
+/* Positionner l'avatar, le pseudo et la date en haut à gauche */
+.comment-header {
+    display: flex;
+    align-items: flex-start; /* Aligne les éléments en haut */
+    width: 100%; /* Prend toute la largeur */
+    flex-wrap: wrap; /* Permet de passer à la ligne si nécessaire */
+    flex-grow: 1; /* Permet au contenu de prendre l'espace restant */
+}
+
+
+
+
+.comment-text {
+    text-align: left;
+}
+
+
+
+.comment-gif, .comment-photo {
+    object-fit: cover; /* Coupe l'image pour qu'elle remplisse le conteneur */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Ajoute une ombre */
+    max-width: 100%; /* Largeur du conteneur */
+}
+
+.comment-media {
+    position: relative;
+    margin-right: 10px;
+    max-height: 400px; /* Hauteur fixe pour le conteneur */
+    max-width: 90%; /* Largeur du conteneur */
+    overflow: hidden; /* Masque les parties de l'image qui dépassent */
+    border-radius: 8px; /* Ajoute des coins arrondis */
+    float: left; /* Aligne les médias à gauche */
+    margin-bottom: 10px; /* Ajoute un espacement en bas */
+
+}
+
+.comment-comm {
+    width: 100%;  /* ou une largeur spécifique si nécessaire */
+    height: auto;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+.event-comments p {
+    margin: 4px 0;
+    color: #E1E8ED; /* Couleur du texte */
+    font-size: 16px; /* Taille de police réduite */
+    line-height: 1.5;
+}
+
+.comment-meta {
+    display: flex; /* Aligne les enfants horizontalement */
+    align-items: center; /* Aligne verticalement au centre */
+    gap: 10px; /* Ajoute un espacement entre les éléments */
+}
+
+.comment-meta .comment-pseudo {
+    font-weight: bold;
+}
+
+.comment-meta .date {
+    font-size: 12px;
+    color: #8899A6; /* Couleur discrète pour la date */
+    margin: 0; /* Supprime les marges inutiles */
+}
+
+
+/*POPUP IMAGE*/
+
+.image-popup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+.image-popup-content {
+    position: relative;
+}
+.popup-image {
+    max-width: 100vw;
+    max-height: 100vh;
+}
+.close-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+
+/*POPUP REPONSE*/
+
+
+.reply-popup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.reply-popup-content {
+    background-color: #192734;
+    padding: 20px;
+    border-radius: 10px;
+    width: 700px;
+    max-height: 80vh; /* Limite la hauteur à 80% de la hauteur de la fenêtre */
+    overflow-y: auto; /* Ajoute un dérouleur vertical si le contenu dépasse */    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    margin: 40px auto;
+
+}
+
+
+.close-reply-popup {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+
+

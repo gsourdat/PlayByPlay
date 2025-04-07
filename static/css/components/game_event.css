@@ -1,0 +1,117 @@
+/* Styles pour les informations de l'événement */
+.game-event .info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    margin-left: 15px;
+}
+
+.game-event .info p {
+    margin: 0 8px;  /* Espacement réduit autour des éléments */
+    font-size: 16px;
+    color: #E0E0E0;
+    flex: 1 1 auto;
+    line-height: 1.4;
+    display: flex;
+    align-items: center; /* Aligne le texte avec l'image */
+}
+
+.game-event .info .event-time {
+    font-weight: bold;
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+/* Couleurs des équipes et des joueurs */
+.game-event .info .event-type,
+.game-event .info .event-team,
+.game-event .info .event-player,
+.game-event .info .event-opponent-team,
+.game-event .info .event-opponent-player {
+    color: #B0B0B0;
+}
+
+.game-event .info .event-team img,
+.game-event .info .event-opponent-team img,
+.game-event .info .event-player img,
+.game-event .info .event-opponent-player img {
+    height: 40px; /* Taille uniforme des images */
+    width: 40px;
+    border-radius: 50%;
+    border: 1px solid #555;
+}
+
+.game-event .info .event-player,
+.game-event .info .event-opponent-player {
+    font-size: 16px; /* Agrandir le pseudo */
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+/* Couleurs des noms des joueurs, selon l'équipe */
+.game-event.redTeam .event-player {
+    color: #FF4C4C;
+}
+
+.game-event.redTeam .event-opponent-player {
+    color: #4C9AFF;
+}
+
+.game-event.blueTeam .event-player {
+    color: #4C9AFF;
+}
+
+.game-event.blueTeam .event-opponent-player {
+    color: #FF4C4C;
+}
+
+.game-event.blueTeam .event-player img {
+    border-color: #4C9AFF;
+}
+
+.game-event.redTeam .event-player img {
+    border-color: #FF4C4C;
+}
+
+.game-event.blueTeam .event-opponent-player img {
+    border-color: #FF4C4C;
+}
+
+.game-event.redTeam .event-opponent-player img {
+    border-color: #4C9AFF;
+}
+
+@media (max-width: 768px) {
+    .game-event {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+
+    .game-event .info p {
+        font-size: 12px;
+        margin: 6px 10px;
+    }
+
+    .game-event .info .event-player,
+    .game-event .info .event-opponent-player {
+        font-size: 12px;
+    }
+
+    .event-container {
+        width: 90%;
+        padding: 15px;
+    }
+}
+
+
+.game-event {
+    padding: 10px 10px 10px 10px; /* Ajout d'un padding pour espacer les éléments */
+}
+
+
+
+
+
+
+

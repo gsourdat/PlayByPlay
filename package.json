@@ -1,0 +1,15 @@
+{
+  "name": "playbyplay",
+  "version": "1.0.0",
+  "description": "![Work in Progress](https://img.shields.io/badge/status-in%20progress-yellow)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "emoji-picker-element": "^1.26.1"
+  }
+}
